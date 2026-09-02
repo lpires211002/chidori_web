@@ -160,7 +160,7 @@ export default {
     loading: 'Cargando…',
     error: 'No se pudieron cargar los datos.',
     noConfig:
-      'Falta configurar VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en .env.local.',
+      'Faltan las variables VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en el build.',
     retry: 'Reintentar',
   },
 };

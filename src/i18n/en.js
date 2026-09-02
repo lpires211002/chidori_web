@@ -158,7 +158,7 @@ export default {
   common: {
     loading: 'Loading…',
     error: 'Could not load the data.',
-    noConfig: 'VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are missing in .env.local.',
+    noConfig: 'VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are missing from the build.',
     retry: 'Retry',
   },
 };
