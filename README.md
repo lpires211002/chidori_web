@@ -17,6 +17,12 @@ npm run dev
 Sin `.env.local` el sitio igual levanta y avisa qué falta, en vez de quedar en
 blanco.
 
+> **Instalar y buildear siempre desde macOS.** Esta carpeta se ve también desde
+> un Linux a través del puente de Claude. Si `npm install` corre del lado Linux,
+> los binarios nativos de Vite quedan compilados para Linux y `npm run dev` falla
+> en la Mac con "Cannot find native binding". Se arregla con
+> `rm -rf node_modules package-lock.json && npm install` en la Mac.
+
 ## Antes de que se vean datos
 
 Correr `sql/web_publica.sql` en Supabase → SQL Editor. Crea:

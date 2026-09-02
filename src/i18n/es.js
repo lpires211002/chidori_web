@@ -86,8 +86,8 @@ export default {
         body: 'Mediana del primer minuto de registro. Es el número contra el que se compara toda la sesión, así que se toma sobre un minuto entero y no sobre las primeras muestras: si cayera dentro de un artefacto, toda la sesión quedaría corrida.',
       },
       {
-        title: 'Hidratación pautada',
-        body: 'Cada ingesta se marca como evento con su volumen en mililitros, para poder relacionar después el volumen ingerido con la evolución de la impedancia.',
+        title: 'Hidratación libre',
+        body: 'El paciente toma agua a voluntad durante toda la sesión. Cada ingesta se marca como evento con su volumen en mililitros, para poder relacionar después lo ingerido con la evolución de la impedancia.',
       },
       {
         title: 'Registro continuo',

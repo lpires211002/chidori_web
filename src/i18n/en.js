@@ -86,8 +86,8 @@ export default {
         body: 'Median of the first minute of recording. It is the number the whole session is compared against, so it is taken over a full minute rather than the first few samples: if it fell inside an artifact, the entire session would be offset.',
       },
       {
-        title: 'Scheduled intake',
-        body: 'Each fluid intake is logged as an event with its volume in millilitres, so intake can later be related to the impedance trace.',
+        title: 'Free hydration',
+        body: 'The subject drinks at will throughout the session. Each intake is logged as an event with its volume in millilitres, so intake can later be related to the impedance trace.',
       },
       {
         title: 'Continuous recording',
