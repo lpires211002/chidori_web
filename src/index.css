@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Editorial paper · un solo color señal, una sola alarma */
+  --color-paper: #fbf9f4;
+  --color-raised: #f5f3ee;
+  --color-ink: #201d18;
+  --color-ink-med: #524c44;
+  --color-ink-low: #756e64;
+  --color-hairline: #dad4ca;
+  --color-signal: #3b59cb;
+  --color-alarm: #b4382c;
+
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-signal) 18%, transparent);
+  }
+}
+
+@layer components {
+  /* Etiqueta mono diminuta en versalitas: el recurso tipográfico del sistema */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .data {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rule {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .link-signal {
+    color: var(--color-signal);
+  }
+  .link-signal:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Foco visible y sobrio, sin anillos gruesos */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 2px;
+  }
+}
