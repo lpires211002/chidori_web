@@ -88,6 +88,39 @@
     text-underline-offset: 3px;
   }
 
+  /* Pasos del protocolo · al pasar el mouse la fila se vuelve tarjeta:
+     fondo levantado, filete del color senal a la izquierda y un aumento
+     minimo. La escala va con transform y no tocando el ancho o el
+     padding, que dispararian recalculo de layout en cada frame.
+
+     Envuelto en (hover: hover) para que en pantallas tactiles no quede
+     una tarjeta "pegada" despues de tocarla, y desactivado cuando el
+     sistema pide menos movimiento. */
+  .paso {
+    transform-origin: left center;
+    transition:
+      background-color 220ms cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 220ms cubic-bezier(0.25, 1, 0.5, 1),
+      transform 220ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @media (hover: hover) {
+    .paso:hover {
+      background-color: var(--color-raised);
+      box-shadow: inset 2px 0 0 var(--color-signal);
+      transform: scale(1.012);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paso {
+      transition: background-color 220ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .paso:hover {
+      transform: none;
+    }
+  }
+
   /* El SVG de StrokeText viene con alto fijo; en un celular eso deja un
      hueco enorme debajo de la palabra. Con alto automatico escala solo,
      manteniendo la proporcion del viewBox. */

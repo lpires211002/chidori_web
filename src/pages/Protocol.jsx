@@ -63,7 +63,10 @@ export default function Protocol() {
         </h2>
         <ol className="list-none p-0 m-0">
           {steps.map((s, i) => (
-            <li key={s.title} className="flex gap-5 py-5 border-b border-hairline">
+            <li
+              key={s.title}
+              className="paso flex gap-5 py-5 px-4 -mx-4 rounded-sm border-b border-hairline"
+            >
               <span className="font-serif text-[26px] leading-none text-signal shrink-0 w-8 pt-1">
                 {String(i + 1).padStart(2, '0')}
               </span>
