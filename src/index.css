@@ -88,6 +88,29 @@
     text-underline-offset: 3px;
   }
 
+  /* Bloques desplegables · sin el triangulito nativo, con un +/- propio.
+     Se resuelve en CSS y no con variantes del framework para no depender
+     de que exista el modificador group-open. */
+  .disclose > summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .disclose > summary::-webkit-details-marker {
+    display: none;
+  }
+  .disclose > summary .signo-mas {
+    display: inline;
+  }
+  .disclose > summary .signo-menos {
+    display: none;
+  }
+  .disclose[open] > summary .signo-mas {
+    display: none;
+  }
+  .disclose[open] > summary .signo-menos {
+    display: inline;
+  }
+
   /* Foco visible y sobrio, sin anillos gruesos */
   :focus-visible {
     outline: 2px solid var(--color-signal);
