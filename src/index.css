@@ -88,6 +88,47 @@
     text-underline-offset: 3px;
   }
 
+  /* La tendencia se dibuja al aparecer. pathLength="1" normaliza el largo
+     del trazado a 1, asi que el mismo dasharray sirve para cualquier
+     sesion sin tener que medir la curva. */
+  @keyframes trazo-curva {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .trazo-curva {
+    animation: trazo-curva 1600ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes aparece-cruda {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .aparece-cruda {
+    opacity: 0;
+    animation: aparece-cruda 700ms ease-out 900ms forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trazo-curva {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+    .aparece-cruda {
+      opacity: 1;
+      animation: none;
+    }
+  }
+
   /* Pasos del protocolo · al pasar el mouse la fila se vuelve tarjeta:
      fondo levantado, filete del color senal a la izquierda y un aumento
      minimo. La escala va con transform y no tocando el ancho o el

@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useI18n } from '../lib/i18n.jsx';
+import { fmtClock, fmtNumber } from '../lib/format.js';
 
 /* Paleta local del gráfico. La cruda va en gris cálido para que la tendencia
  * sea lo único que usa el color señal. */
@@ -7,6 +8,8 @@ const RAW = '#c3bcb1';
 const TREND = '#3b59cb';
 const AXIS = '#dad4ca';
 const TICK = '#756e64';
+const INK = '#201d18';
+const PAPER = '#fbf9f4';
 
 const PAD = { l: 48, r: 12, t: 20, b: 26 };
 
@@ -41,10 +44,25 @@ function fmtTimeTick(seconds, totalS) {
   return `${Math.round(seconds / 60)}′`;
 }
 
+/** Índice del punto cuyo t está más cerca de `t`. Búsqueda binaria: la serie
+ *  puede tener ~1.000 puntos y esto corre en cada movimiento del dedo. */
+function nearestIndex(points, t) {
+  let lo = 0;
+  let hi = points.length - 1;
+  while (hi - lo > 1) {
+    const mid = (lo + hi) >> 1;
+    if (points[mid].t < t) lo = mid;
+    else hi = mid;
+  }
+  return Math.abs(points[lo].t - t) <= Math.abs(points[hi].t - t) ? lo : hi;
+}
+
 export default function ImpedanceChart({ raw = [], trend = [], events = [], height = 240 }) {
   const { t: tr, lang } = useI18n();
   const boxRef = useRef(null);
+  const svgRef = useRef(null);
   const [width, setWidth] = useState(0);
+  const [cursor, setCursor] = useState(null);
 
   useEffect(() => {
     const el = boxRef.current;
@@ -101,20 +119,50 @@ export default function ImpedanceChart({ raw = [], trend = [], events = [], heig
         }),
       })),
       xTicks: timeTicks(maxT).filter((v) => v <= maxT),
+      decimals,
     };
   }, [raw, trend, width, height, lang]);
+
+  /* Lectura bajo el cursor. Se engancha a la tendencia, que es la serie que
+   * se lee; la cruda en ese instante puede estar dentro de un artefacto. */
+  const leer = useCallback(
+    (clientX) => {
+      const serie = trend.length ? trend : raw;
+      if (!model || !serie.length || !svgRef.current) return;
+      const rect = svgRef.current.getBoundingClientRect();
+      if (!rect.width) return;
+      const px = ((clientX - rect.left) / rect.width) * width;
+      const frac = (px - PAD.l) / model.iw;
+      const t = model.t0 + Math.min(1, Math.max(0, frac)) * model.maxT;
+      const i = nearestIndex(serie, t);
+      const p = serie[i];
+      setCursor({ x: model.x(p.t), y: model.y(p.z), t: p.t - model.t0, z: p.z });
+    },
+    [model, trend, raw, width]
+  );
+
+  const onMove = (e) => leer(e.clientX);
+  const onLeave = () => setCursor(null);
 
   return (
     <figure className="m-0">
       <div ref={boxRef} className="w-full">
         {model ? (
           <svg
+            ref={svgRef}
             width={width}
             height={height}
             viewBox={`0 0 ${width} ${height}`}
             role="img"
             aria-label={`${tr('figure.axisY')} — ${tr('figure.axisX')}`}
             className="block"
+            /* pan-y deja que el dedo siga scrolleando la página en vertical
+             * mientras el movimiento horizontal lee el gráfico. */
+            style={{ touchAction: 'pan-y' }}
+            onPointerMove={onMove}
+            onPointerDown={onMove}
+            onPointerLeave={onLeave}
+            onPointerCancel={onLeave}
           >
             {/* Guías horizontales + etiquetas del eje Y */}
             {model.yTicks.map((tick) => (
@@ -170,9 +218,20 @@ export default function ImpedanceChart({ raw = [], trend = [], events = [], heig
               );
             })}
 
-            <path d={model.rawPath} fill="none" stroke={RAW} strokeWidth="1" />
             <path
+              key={`raw-${model.rawPath.length}`}
+              className="aparece-cruda"
+              d={model.rawPath}
+              fill="none"
+              stroke={RAW}
+              strokeWidth="1"
+            />
+            <path
+              key={`trend-${model.trendPath.length}`}
+              className="trazo-curva"
               d={model.trendPath}
+              pathLength="1"
+              strokeDasharray="1"
               fill="none"
               stroke={TREND}
               strokeWidth="1.75"
@@ -211,6 +270,48 @@ export default function ImpedanceChart({ raw = [], trend = [], events = [], heig
                 {fmtTimeTick(v, model.maxT)}
               </text>
             ))}
+
+            {/* Lectura bajo el cursor */}
+            {cursor &&
+              (() => {
+                const etiqueta = `${fmtClock(cursor.t)} · ${fmtNumber(cursor.z, model.decimals, lang)} Ω`;
+                const ancho = etiqueta.length * 6.1 + 12;
+                const aLaIzq = cursor.x + ancho + 10 > width - PAD.r;
+                const lx = aLaIzq ? cursor.x - ancho - 8 : cursor.x + 8;
+                return (
+                  <g pointerEvents="none">
+                    <line
+                      x1={cursor.x}
+                      x2={cursor.x}
+                      y1={PAD.t}
+                      y2={height - PAD.b}
+                      stroke={INK}
+                      strokeWidth="1"
+                      opacity="0.35"
+                    />
+                    <circle cx={cursor.x} cy={cursor.y} r="3.5" fill={TREND} />
+                    <rect
+                      x={lx}
+                      y={PAD.t + 2}
+                      width={ancho}
+                      height={18}
+                      rx="3"
+                      fill={PAPER}
+                      stroke={AXIS}
+                      strokeWidth="1"
+                    />
+                    <text
+                      x={lx + 6}
+                      y={PAD.t + 14}
+                      fontFamily="IBM Plex Mono, monospace"
+                      fontSize="11"
+                      fill={INK}
+                    >
+                      {etiqueta}
+                    </text>
+                  </g>
+                );
+              })()}
           </svg>
         ) : (
           <div style={{ height }} className="border border-hairline rounded-sm" />

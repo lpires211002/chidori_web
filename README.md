@@ -52,6 +52,21 @@ contraseña de la app de escritorio. Dos botones por sesión:
 | `/protocolo` | Metodología, cadena de medición, instrumentación |
 | `/admin` | Panel de publicación |
 
+## Banco de pruebas del gráfico
+
+El contenedor donde se desarrolla no llega a Supabase, así que el gráfico no
+se puede ver con datos reales desde ahí. `test.html` + `src/test-chart.jsx`
+montan el componente con una sesión sintética que tiene la física real: basal
+61,4 Ω, llenado de −1,28 Ω/h, ruido σ = 0,010 Ω y un artefacto de movimiento
+de +4,33 Ω a los 40 minutos.
+
+```bash
+npx vite build --config vite.test.config.mjs   # queda en dist-test/
+```
+
+Sirve para revisar la escala del eje, la lectura del cursor y el
+comportamiento en pantallas angostas sin tocar datos de pacientes.
+
 ## Decisiones que vale la pena conocer
 
 **El eje Y nunca arranca en cero.** La señal de llenado es de ~1,28 Ω/h sobre
