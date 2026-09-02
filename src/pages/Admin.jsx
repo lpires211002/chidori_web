@@ -44,7 +44,10 @@ export default function Admin() {
   }, [sb]);
 
   useEffect(() => {
-    if (!sb || !session?.user?.id) return setProfile(null);
+    if (!sb || !session?.user?.id) {
+      setProfile(null);
+      return;
+    }
     sb.from('profiles')
       .select('id, role, display_name')
       .eq('id', session.user.id)

@@ -24,7 +24,10 @@ export default function Session() {
   const [data, setData] = useState({ status: 'loading' });
 
   useEffect(() => {
-    if (!isConfigured) return setData({ status: 'noconfig' });
+    if (!isConfigured) {
+      setData({ status: 'noconfig' });
+      return;
+    }
     let alive = true;
     setData({ status: 'loading' });
 
@@ -32,7 +35,10 @@ export default function Session() {
       try {
         const session = await fetchSession(id);
         if (!alive) return;
-        if (!session) return setData({ status: 'notfound' });
+        if (!session) {
+          setData({ status: 'notfound' });
+          return;
+        }
 
         const [series, events, fields, published] = await Promise.all([
           fetchSeries(id),

@@ -13,7 +13,14 @@ const Admin = lazy(() => import('./pages/Admin.jsx'));
 
 function ScrollTop() {
   const { pathname } = useLocation();
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
+  // Con llaves a proposito: una flecha sin llaves DEVUELVE lo que devuelva
+  // window.scrollTo, y React guarda ese valor como si fuera la funcion de
+  // limpieza del efecto. Si algo del navegador pisa scrollTo y le hace
+  // devolver algo distinto de undefined, React intenta invocarlo al cambiar
+  // de ruta y tira "is not a function", desmontando el arbol entero.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   return null;
 }
 

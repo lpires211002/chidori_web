@@ -15,7 +15,10 @@ export default function Home() {
   const [figure, setFigure] = useState(null);
 
   useEffect(() => {
-    if (!isConfigured) return setState({ status: 'noconfig', sessions: [] });
+    if (!isConfigured) {
+      setState({ status: 'noconfig', sessions: [] });
+      return;
+    }
     let alive = true;
 
     (async () => {
