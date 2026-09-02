@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { isConfigured } from '../lib/supabase.js';
+import { isConfigured } from '../lib/rest.js';
 import { fetchPublished, fetchSeries, fetchEvents, summarize } from '../lib/data.js';
 import { trendSeries } from '../lib/series.js';
 import { fmtDelta, fmtInt } from '../lib/format.js';

@@ -1,4 +1,5 @@
 import { useI18n } from '../lib/i18n.jsx';
+import ElectrodeFigure from '../components/ElectrodeFigure.jsx';
 
 function Spec({ title, rows, note }) {
   return (
@@ -31,6 +32,13 @@ export default function Protocol() {
       </header>
 
       <section className="mb-10">
+        <h2 className="label text-ink border-b border-hairline pb-2 mb-4">
+          {t('protocol.principleTitle')}
+        </h2>
+        <p className="text-ink-med">{t('protocol.principle')}</p>
+      </section>
+
+      <section className="mb-10">
         <h2 className="label text-ink border-b border-hairline pb-2 mb-1">
           {t('protocol.stepsTitle')}
         </h2>
@@ -47,6 +55,17 @@ export default function Protocol() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="mb-10">
+        <h2 className="label text-ink border-b border-hairline pb-2 mb-4">
+          {t('protocol.electrodeTitle')}
+        </h2>
+        <p className="text-ink-med mb-6">{t('protocol.electrodeBody')}</p>
+        <div className="border border-hairline rounded-sm px-3 py-4">
+          <ElectrodeFigure />
+        </div>
+        <p className="label text-ink-low mt-3">{t('protocol.electrodeCaption')}</p>
       </section>
 
       <section className="mb-10">

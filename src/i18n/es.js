@@ -72,6 +72,9 @@ export default {
     kicker: 'Metodología',
     title: 'Protocolo de medición',
     standfirst: 'Todas las sesiones publicadas acá siguen el mismo procedimiento.',
+    principleTitle: 'Principio',
+    principle:
+      'La orina es mucho más conductora que el tejido que la rodea. A medida que la vejiga se llena, la corriente encuentra un camino más fácil y la impedancia medida baja. Esa caída es lo que sigue el instrumento.',
     stepsTitle: 'Procedimiento',
     steps: [
       {
@@ -98,6 +101,7 @@ export default {
     instrumentTitle: 'Instrumentación',
     instrument: [
       { label: 'Microcontrolador', value: 'ESP32-C3' },
+      { label: 'Electrodos', value: '4 · montaje tetrapolar' },
       { label: 'Generación', value: 'AD9833 · senoidal 50 kHz' },
       { label: 'Corriente inyectada', value: '288 µA' },
       { label: 'Cadena receptora', value: '×200 · INA ×5 · pasa-altos ×10 · pasa-bajos ×4' },
@@ -115,8 +119,15 @@ export default {
       { label: 'Artefactos de movimiento', value: 'hasta 4,33 Ω · 5–25 s' },
       { label: 'Rango útil', value: '≈ 4,6 Ω' },
     ],
+    electrodeTitle: 'Montaje de electrodos',
+    electrodeBody:
+      'Cuatro electrodos a nivel vesical, alineados por debajo del ombligo y simétricos respecto de la línea media. El par externo inyecta la corriente; el par interno mide la tensión. Separar las dos funciones es lo que saca de la lectura la impedancia de contacto piel-electrodo: por los electrodos de medición no circula corriente, así que no cae tensión sobre ellos.',
+    electrodeCaption: 'Figura 2 · Montaje tetrapolar a nivel vesical.',
+    navel: 'ombligo',
+    sensing: 'V+ / V− · medición de tensión',
+    injection: 'I+ / I− · inyección de corriente',
     chainTitle: 'Cadena de medición',
-    chainCaption: 'Figura 2 · Del generador al registro.',
+    chainCaption: 'Figura 3 · Del generador al registro.',
     chain: [
       'AD9833 · 50 kHz',
       'Fuente de corriente Howland · 288 µA',

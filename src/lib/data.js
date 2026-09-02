@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js';
+import { select } from './rest.js';
 import { toSeries, decimate } from './series.js';
 
 /**
@@ -10,23 +10,13 @@ import { toSeries, decimate } from './series.js';
  * son estas vistas y nada más. Ver sql/web_publica.sql.
  */
 
-export async function fetchPublished() {
-  const { data, error } = await supabase
-    .from('public_sessions')
-    .select('*')
-    .order('recorded_at', { ascending: false });
-  if (error) throw error;
-  return data || [];
+export function fetchPublished() {
+  return select('public_sessions', { select: '*', order: 'recorded_at.desc' });
 }
 
 export async function fetchSession(id) {
-  const { data, error } = await supabase
-    .from('public_sessions')
-    .select('*')
-    .eq('id', id)
-    .maybeSingle();
-  if (error) throw error;
-  return data;
+  const rows = await select('public_sessions', { select: '*', id: `eq.${id}`, limit: '1' });
+  return rows[0] || null;
 }
 
 /**
@@ -35,35 +25,31 @@ export async function fetchSession(id) {
  * justamente lo que no se puede explicar después en el póster.
  */
 export async function fetchSeries(sessionId, target = 700) {
-  const { data, error } = await supabase
-    .from('public_measurements')
-    .select('elapsed_time, impedance')
-    .eq('session_id', sessionId)
-    .order('elapsed_time', { ascending: true })
-    .limit(60000);
-  if (error) throw error;
-  const full = toSeries(data);
+  const rows = await select('public_measurements', {
+    select: 'elapsed_time,impedance',
+    session_id: `eq.${sessionId}`,
+    order: 'elapsed_time.asc',
+    limit: '60000',
+  });
+  const full = toSeries(rows);
   return { full, plot: decimate(full, target), count: full.length };
 }
 
-export async function fetchEvents(sessionId) {
-  const { data, error } = await supabase
-    .from('public_session_events')
-    .select('*')
-    .eq('session_id', sessionId)
-    .order('event_number', { ascending: true });
-  if (error) throw error;
-  return data || [];
+export function fetchEvents(sessionId) {
+  return select('public_session_events', {
+    select: '*',
+    session_id: `eq.${sessionId}`,
+    order: 'event_number.asc',
+  });
 }
 
 /** Catálogo de campos, para poner las etiquetas y unidades reales. */
 export async function fetchFields() {
-  const { data, error } = await supabase
-    .from('public_field_definitions')
-    .select('*')
-    .order('sort_order');
-  if (error) return [];
-  return data || [];
+  try {
+    return await select('public_field_definitions', { select: '*', order: 'sort_order.asc' });
+  } catch {
+    return [];
+  }
 }
 
 /** Números de portada, derivados de lo publicado. Nada hardcodeado. */

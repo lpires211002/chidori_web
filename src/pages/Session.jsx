@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { isConfigured } from '../lib/supabase.js';
+import { isConfigured } from '../lib/rest.js';
 import {
   fetchSession,
   fetchSeries,

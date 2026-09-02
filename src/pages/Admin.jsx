@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { supabase, isConfigured, usernameToEmail } from '../lib/supabase.js';
+import { getSupabase, usernameToEmail } from '../lib/supabase.js';
+import { isConfigured } from '../lib/rest.js';
 import { fmtDate, fmtInt } from '../lib/format.js';
 import { useI18n } from '../lib/i18n.jsx';
 import Notice from '../components/Notice.jsx';
@@ -15,6 +16,7 @@ import Notice from '../components/Notice.jsx';
  */
 export default function Admin() {
   const { t, lang } = useI18n();
+  const [sb, setSb] = useState(null);
   const [session, setSession] = useState(null);
   const [profile, setProfile] = useState(null);
   const [rows, setRows] = useState([]);
@@ -22,25 +24,36 @@ export default function Admin() {
   const [error, setError] = useState(null);
   const [form, setForm] = useState({ username: '', password: '' });
 
+  // supabase-js llega por import dinámico: no viaja en el bundle público.
   useEffect(() => {
     if (!isConfigured) return;
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
-    return () => sub?.subscription?.unsubscribe();
+    let alive = true;
+    getSupabase()
+      .then((c) => alive && setSb(c))
+      .catch((e) => alive && setError(e.message));
+    return () => {
+      alive = false;
+    };
   }, []);
 
   useEffect(() => {
-    if (!session?.user?.id) return setProfile(null);
-    supabase
-      .from('profiles')
+    if (!sb) return;
+    sb.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: sub } = sb.auth.onAuthStateChange((_e, s) => setSession(s));
+    return () => sub?.subscription?.unsubscribe();
+  }, [sb]);
+
+  useEffect(() => {
+    if (!sb || !session?.user?.id) return setProfile(null);
+    sb.from('profiles')
       .select('id, role, display_name')
       .eq('id', session.user.id)
       .maybeSingle()
       .then(({ data }) => setProfile(data));
-  }, [session]);
+  }, [sb, session]);
 
   const load = useCallback(async () => {
-    const { data, error: err } = await supabase
+    const { data, error: err } = await sb
       .from('sessions')
       .select(
         'id, session_number, created_at, elapsed_time_str, total_events, is_public, is_featured, patient:patients ( code )'
@@ -48,16 +61,16 @@ export default function Admin() {
       .order('created_at', { ascending: false });
     if (err) return setError(err.message);
     setRows(data || []);
-  }, []);
+  }, [sb]);
 
   useEffect(() => {
-    if (profile?.role === 'superadmin') load();
-  }, [profile, load]);
+    if (sb && profile?.role === 'superadmin') load();
+  }, [sb, profile, load]);
 
   async function signIn(e) {
     e.preventDefault();
     setError(null);
-    const { error: err } = await supabase.auth.signInWithPassword({
+    const { error: err } = await sb.auth.signInWithPassword({
       email: usernameToEmail(form.username),
       password: form.password,
     });
@@ -70,9 +83,9 @@ export default function Admin() {
     try {
       // Portada excluyente: bajar la anterior antes de subir esta.
       if (field === 'is_featured' && !row.is_featured) {
-        await supabase.from('sessions').update({ is_featured: false }).eq('is_featured', true);
+        await sb.from('sessions').update({ is_featured: false }).eq('is_featured', true);
       }
-      const { data, error: err } = await supabase
+      const { data, error: err } = await sb
         .from('sessions')
         .update({ [field]: !row[field] })
         .eq('id', row.id)
@@ -89,6 +102,7 @@ export default function Admin() {
   }
 
   if (!isConfigured) return <Notice tone="alarm">{t('common.noConfig')}</Notice>;
+  if (!sb) return <p className="label text-ink-low">{t('common.loading')}</p>;
 
   if (!session) {
     return (
@@ -129,7 +143,7 @@ export default function Admin() {
       <>
         <Notice tone="alarm">{t('admin.onlySuperadmin')}</Notice>
         <button
-          onClick={() => supabase.auth.signOut()}
+          onClick={() => sb.auth.signOut()}
           className="label text-ink-low hover:text-ink mt-5"
         >
           {t('admin.signOut')}
@@ -146,7 +160,7 @@ export default function Admin() {
           <p className="text-ink-med text-[14px] mt-1">{t('admin.subtitle')}</p>
         </div>
         <button
-          onClick={() => supabase.auth.signOut()}
+          onClick={() => sb.auth.signOut()}
           className="label text-ink-low hover:text-ink shrink-0 pt-2"
         >
           {t('admin.signOut')}

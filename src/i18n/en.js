@@ -72,6 +72,9 @@ export default {
     kicker: 'Methodology',
     title: 'Measurement protocol',
     standfirst: 'Every session published here follows the same procedure.',
+    principleTitle: 'Principle',
+    principle:
+      'Urine is far more conductive than the surrounding tissue. As the bladder fills, the current finds an easier path and the measured impedance drops. That fall is what the instrument tracks.',
     stepsTitle: 'Procedure',
     steps: [
       {
@@ -98,6 +101,7 @@ export default {
     instrumentTitle: 'Instrumentation',
     instrument: [
       { label: 'Microcontroller', value: 'ESP32-C3' },
+      { label: 'Electrodes', value: '4 · tetrapolar montage' },
       { label: 'Signal generation', value: 'AD9833 · 50 kHz sine' },
       { label: 'Injected current', value: '288 µA' },
       { label: 'Receive chain', value: '×200 · INA ×5 · high-pass ×10 · low-pass ×4' },
@@ -114,8 +118,15 @@ export default {
       { label: 'Motion artifacts', value: 'up to 4.33 Ω · 5–25 s' },
       { label: 'Useful range', value: '≈ 4.6 Ω' },
     ],
+    electrodeTitle: 'Electrode montage',
+    electrodeBody:
+      'Four electrodes at bladder level, aligned below the navel and symmetric about the midline. The outer pair injects the current; the inner pair senses the voltage. Separating the two roles is what removes skin-electrode contact impedance from the reading: no current flows through the sensing electrodes, so no voltage drops across them.',
+    electrodeCaption: 'Figure 2 · Tetrapolar montage at bladder level.',
+    navel: 'navel',
+    sensing: 'V+ / V− · voltage sensing',
+    injection: 'I+ / I− · current injection',
     chainTitle: 'Measurement chain',
-    chainCaption: 'Figure 2 · From generator to record.',
+    chainCaption: 'Figure 3 · From generator to record.',
     chain: [
       'AD9833 · 50 kHz',
       'Howland current source · 288 µA',
