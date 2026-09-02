@@ -47,14 +47,16 @@ export default function Protocol() {
       <header className="mb-10">
         <p className="label text-ink-low mb-3">{t('protocol.kicker')}</p>
         <h1 className="text-[34px] leading-tight mb-4">{t('protocol.title')}</h1>
-        <p className="font-serif italic text-ink-med text-[17px]">{t('protocol.standfirst')}</p>
+        <p className="font-serif italic text-ink-med text-[17px] max-w-[62ch]">
+          {t('protocol.standfirst')}
+        </p>
       </header>
 
       <section className="mb-10">
         <h2 className="label text-ink border-b border-hairline pb-2 mb-4">
           {t('protocol.principleTitle')}
         </h2>
-        <p className="text-ink-med">{t('protocol.principle')}</p>
+        <p className="text-ink-med max-w-[56ch]">{t('protocol.principle')}</p>
       </section>
 
       <section className="mb-10">
@@ -72,7 +74,7 @@ export default function Protocol() {
               </span>
               <div>
                 <h3 className="label text-ink mb-1.5">{s.title}</h3>
-                <p className="text-ink-med text-[14px]">{s.body}</p>
+                <p className="text-ink-med text-[14px] max-w-[56ch]">{s.body}</p>
               </div>
             </li>
           ))}
@@ -83,11 +85,14 @@ export default function Protocol() {
         <h2 className="label text-ink border-b border-hairline pb-2 mb-4">
           {t('protocol.electrodeTitle')}
         </h2>
-        <p className="text-ink-med mb-6">{t('protocol.electrodeBody')}</p>
+        <p className="text-ink-med mb-6 max-w-[56ch]">{t('protocol.electrodeBody')}</p>
         <div className="border border-hairline rounded-sm px-3 py-4">
           <ElectrodeFigure />
         </div>
-        <p className="label text-ink-low mt-3">{t('protocol.electrodeCaption')}</p>
+        <p className="text-[13px] text-ink-low mt-3">
+          <span className="label">{t('protocol.electrodeFig')}</span> ·{' '}
+          {t('protocol.electrodeCaption')}
+        </p>
       </section>
 
       <section className="mb-10">
@@ -106,7 +111,9 @@ export default function Protocol() {
               </li>
             ))}
           </ol>
-          <p className="label text-ink-low mt-4">{t('protocol.chainCaption')}</p>
+          <p className="text-[13px] text-ink-low mt-4">
+            <span className="label">{t('protocol.chainFig')}</span> · {t('protocol.chainCaption')}
+          </p>
         </Desplegable>
 
         <Desplegable title={t('protocol.instrumentTitle')}>
@@ -115,12 +122,14 @@ export default function Protocol() {
 
         <Desplegable title={t('protocol.performanceTitle')}>
           <Filas rows={t('protocol.performance')} />
-          <p className="label text-ink-low mt-3">{t('protocol.performanceNote')}</p>
+          <p className="text-[13px] text-ink-low mt-3 max-w-[56ch]">
+            {t('protocol.performanceNote')}
+          </p>
         </Desplegable>
       </section>
 
       <div className="border border-hairline rounded-sm px-4 py-4">
-        <p className="data text-ink-med">{t('protocol.disclaimer')}</p>
+        <p className="data text-ink-med max-w-[56ch]">{t('protocol.disclaimer')}</p>
       </div>
     </>
   );

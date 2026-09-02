@@ -46,7 +46,7 @@ function Dim({ from, to, y, text }) {
         y={y - 6}
         textAnchor="middle"
         {...mono}
-        fontSize="10"
+        fontSize="11"
         fill={LOW}
       >
         {text}
@@ -82,7 +82,7 @@ export default function ElectrodeFigure() {
 
       {/* Ombligo · rotulado a la derecha, lejos de las cotas */}
       <circle cx={MID} cy={NAVEL_Y} r="3.5" fill="none" stroke={INK} strokeWidth="1.25" />
-      <text x={MID + 12} y={NAVEL_Y + 4} {...mono} fontSize="10" fill={LOW}>
+      <text x={MID + 12} y={NAVEL_Y + 4} {...mono} fontSize="11" fill={LOW}>
         {t('protocol.navel')}
       </text>
 
@@ -117,10 +117,10 @@ export default function ElectrodeFigure() {
       <Dim from={MID - 8 * CM} to={MID} y={DIM_8_Y} text="8 cm" />
 
       {/* Leyenda · por fuera del contorno */}
-      <text x={MID} y={274} textAnchor="middle" {...mono} fontSize="10" fill={LOW}>
+      <text x={MID} y={274} textAnchor="middle" {...mono} fontSize="11" fill={LOW}>
         {t('protocol.sensing')}
       </text>
-      <text x={MID} y={290} textAnchor="middle" {...mono} fontSize="10" fill={LOW}>
+      <text x={MID} y={290} textAnchor="middle" {...mono} fontSize="11" fill={LOW}>
         {t('protocol.injection')}
       </text>
     </svg>

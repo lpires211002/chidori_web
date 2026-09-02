@@ -123,12 +123,14 @@ export default {
     electrodeTitle: 'Montaje de electrodos',
     electrodeBody:
       'Cuatro electrodos a nivel vesical, alineados por debajo del ombligo y simétricos respecto de la línea media. El par externo inyecta la corriente; el par interno mide la tensión. Separar las dos funciones es lo que saca de la lectura la impedancia de contacto piel-electrodo: por los electrodos de medición no circula corriente, así que no cae tensión sobre ellos.',
-    electrodeCaption: 'Figura 2 · Montaje tetrapolar a nivel vesical.',
+    electrodeFig: 'Figura 2',
+    electrodeCaption: 'Montaje tetrapolar a nivel vesical.',
     navel: 'ombligo',
     sensing: 'V+ / V− · medición de tensión',
     injection: 'I+ / I− · inyección de corriente',
     chainTitle: 'Cadena de medición',
-    chainCaption: 'Figura 3 · Del generador al registro.',
+    chainFig: 'Figura 3',
+    chainCaption: 'Del generador al registro.',
     chain: [
       'AD9833 · 50 kHz',
       'Fuente de corriente Howland · 288 µA',

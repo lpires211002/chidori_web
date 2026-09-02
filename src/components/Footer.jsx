@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-hairline">
       <div className="w-full max-w-[720px] mx-auto px-5 py-6">
-        <p className="label text-ink-low">{line}</p>
+        <p className="data text-ink-low">{line}</p>
       </div>
     </footer>
   );

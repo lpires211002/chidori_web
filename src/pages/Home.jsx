@@ -172,7 +172,7 @@ export default function Home() {
                   );
                 })}
               </ul>
-              <p className="label text-ink-low">{t('list.hint')}</p>
+              <p className="text-[13px] text-ink-low">{t('list.hint')}</p>
             </>
           )}
         </section>
