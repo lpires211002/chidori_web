@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Chidori">
+  <title>Chidori</title>
+  <path fill="#3b59cb" d="M 6,25 C 8,18.5 15,15.5 21,18.5 C 26,21 29,22.5 32,22.5 C 35,22.5 38,21 43,18.5 C 49,15.5 56,18.5 58,25 C 61,36 58,48 50,54.5 C 45,58.5 39,60.5 32,60.5 C 25,60.5 19,58.5 14,54.5 C 6,48 3,36 6,25 Z"/>
+  <path fill="#fbf9f4" stroke="#fbf9f4" stroke-width="3" stroke-linejoin="round" d="M 38,25 L 24,41 L 31,41 L 27,55 L 42,38 L 34,38 Z"/>
+</svg>
