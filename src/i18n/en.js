@@ -4,6 +4,7 @@ export default {
   hero: {
     kicker: 'Final degree project · 2026',
     title: 'Real-time bladder bioimpedance',
+    scroll: 'Scroll for the measurements',
     deck:
       'Non-invasive detection of bladder filling from the impedance drop measured at 50 kHz. The physiological signal is roughly 1.3 Ω per hour, and a single movement by the patient can be worth three times that: the whole work is telling one from the other.',
   },

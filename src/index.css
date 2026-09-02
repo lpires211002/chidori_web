@@ -88,6 +88,13 @@
     text-underline-offset: 3px;
   }
 
+  /* El SVG de StrokeText viene con alto fijo; en un celular eso deja un
+     hueco enorme debajo de la palabra. Con alto automatico escala solo,
+     manteniendo la proporcion del viewBox. */
+  .wordmark .stroke-text__svg {
+    height: auto;
+  }
+
   /* Bloques desplegables · sin el triangulito nativo, con un +/- propio.
      Se resuelve en CSS y no con variantes del framework para no depender
      de que exista el modificador group-open. */

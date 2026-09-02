@@ -6,6 +6,7 @@ import { trendSeries } from '../lib/series.js';
 import { fmtDelta, fmtInt } from '../lib/format.js';
 import { useI18n } from '../lib/i18n.jsx';
 import ImpedanceChart from '../components/ImpedanceChart.jsx';
+import StrokeText from '../components/StrokeText.jsx';
 import Stats from '../components/Stat.jsx';
 import Notice from '../components/Notice.jsx';
 
@@ -54,10 +55,39 @@ export default function Home() {
 
   return (
     <>
-      <section className="mb-10">
-        <p className="label text-ink-low mb-3">{t('hero.kicker')}</p>
-        <h1 className="text-[34px] sm:text-[38px] leading-[1.15] mb-4">{t('hero.title')}</h1>
-        <p className="text-ink-med">{t('hero.deck')}</p>
+      {/* Portada a pantalla completa: la marca primero, los datos despues de
+          bajar. El trazo se dibuja al montar y respeta prefers-reduced-motion. */}
+      <section className="min-h-[76vh] flex flex-col justify-center pb-16">
+        <p className="label text-ink-low mb-7">{t('hero.kicker')}</p>
+
+        <h1 className="mb-8">
+          <StrokeText
+            text="CHIDORI"
+            className="wordmark"
+            strokeColor="#3b59cb"
+            fillColor="#201d18"
+            strokeWidth={0.9}
+            drawDuration={1.5}
+            fillDelay={0.15}
+            stagger={0.07}
+            ease="power2.out"
+            trigger="mount"
+            fillMode="wipe"
+            fontSize={128}
+            fontWeight={500}
+            letterSpacing={4}
+          />
+        </h1>
+
+        <p className="font-serif text-[23px] sm:text-[27px] leading-snug text-ink mb-5">
+          {t('hero.title')}
+        </p>
+        <p className="text-ink-med max-w-[56ch]">{t('hero.deck')}</p>
+
+        <p className="label text-ink-low mt-14 flex items-center gap-2">
+          <span aria-hidden="true">↓</span>
+          {t('hero.scroll')}
+        </p>
       </section>
 
       <section className="mb-12">

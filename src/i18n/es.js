@@ -4,6 +4,7 @@ export default {
   hero: {
     kicker: 'Proyecto final de carrera · 2026',
     title: 'Bioimpedancia vesical en tiempo real',
+    scroll: 'Deslizá para ver las mediciones',
     deck:
       'Detección no invasiva del llenado de la vejiga a partir de la caída de impedancia medida a 50 kHz. La señal fisiológica es de aproximadamente 1,3 Ω por hora, y un solo movimiento del paciente puede valer tres veces eso: todo el trabajo está en separar una cosa de la otra.',
   },
