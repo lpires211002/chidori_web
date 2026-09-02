@@ -1,4 +1,4 @@
-import { select } from './rest.js';
+import { select, selectAll, rpc } from './rest.js';
 import { toSeries, decimate } from './series.js';
 
 /**
@@ -25,14 +25,28 @@ export async function fetchSession(id) {
  * justamente lo que no se puede explicar después en el póster.
  */
 export async function fetchSeries(sessionId, target = 700) {
-  const rows = await select('public_measurements', {
-    select: 'elapsed_time,impedance',
-    session_id: `eq.${sessionId}`,
-    order: 'elapsed_time.asc',
-    limit: '60000',
-  });
-  const full = toSeries(rows);
-  return { full, plot: decimate(full, target), count: full.length };
+  // Camino normal: la base decima y manda ~1.000 puntos con la envolvente
+  // completa, más el total real de muestras. Un solo pedido.
+  try {
+    const rows = await rpc('public_series', {
+      p_session: sessionId,
+      p_buckets: Math.max(200, Math.round(target / 2)),
+    });
+    const full = toSeries(rows.map((r) => ({ elapsed_time: r.t, impedance: r.z })));
+    const count = Number(rows[0]?.n);
+    return { full, plot: full, count: Number.isFinite(count) ? count : full.length };
+  } catch (err) {
+    // Plan B mientras `public_series` no exista en la base: paginar de a
+    // 1.000. Funciona, pero son muchos pedidos en una sesión larga.
+    console.warn('[series] sin public_series, paginando', err);
+    const rows = await selectAll('public_measurements', {
+      select: 'elapsed_time,impedance',
+      session_id: `eq.${sessionId}`,
+      order: 'elapsed_time.asc',
+    });
+    const full = toSeries(rows);
+    return { full, plot: decimate(full, target), count: full.length };
+  }
 }
 
 export function fetchEvents(sessionId) {
