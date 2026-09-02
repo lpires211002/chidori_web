@@ -160,5 +160,9 @@ export default {
     error: 'Could not load the data.',
     noConfig: 'VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are missing from the build.',
     retry: 'Retry',
+    reload: 'Reload',
+    crashTitle: 'Something failed while rendering this page',
+    crashBody: 'The rest of the site still works. If it happens again, reload the page.',
+    crashStale: 'This tab is running an old version of the site. Reloading fixes it.',
   },
 };

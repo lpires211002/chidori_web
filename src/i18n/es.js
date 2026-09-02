@@ -162,5 +162,11 @@ export default {
     noConfig:
       'Faltan las variables VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en el build.',
     retry: 'Reintentar',
+    reload: 'Recargar',
+    crashTitle: 'Algo falló al mostrar esta página',
+    crashBody:
+      'El resto del sitio sigue funcionando. Si el problema se repite, recargá la página.',
+    crashStale:
+      'Esta pestaña quedó con una versión vieja del sitio. Recargá y se arregla.',
   },
 };
