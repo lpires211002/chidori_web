@@ -79,24 +79,28 @@ export default {
     stepsTitle: 'Procedimiento',
     steps: [
       {
-        title: 'Preparación',
-        body: 'Colocación de electrodos y verificación de contacto. El instrumento descarta las primeras muestras hasta que la lectura se estabiliza.',
+        title: 'Preparación del sujeto',
+        body: 'Se le pide al sujeto venir con la zona púbica rasurada y la piel limpia y seca, para que el adhesivo del electrodo apoye parejo. Antes de empezar se completa una encuesta breve de ingesta de líquido: la habitual y la de ese día.',
       },
       {
-        title: 'Basal',
-        body: 'Mediana del primer minuto de registro. Es el número contra el que se compara toda la sesión, así que se toma sobre un minuto entero y no sobre las primeras muestras: si cayera dentro de un artefacto, toda la sesión quedaría corrida.',
+        title: 'Montaje de electrodos',
+        body: 'Cuatro electrodos adhesivos en una sola fila centrada en el ombligo, cada uno en contacto con el siguiente. Se verifica que la unión con la piel sea uniforme en todo el perímetro y que ningún borde se despegue: un electrodo flojo aparece en la señal como un salto, no como llenado.',
       },
       {
-        title: 'Hidratación libre',
-        body: 'El paciente toma agua a voluntad durante toda la sesión. Cada ingesta se marca como evento con su volumen en mililitros, para poder relacionar después lo ingerido con la evolución de la impedancia.',
+        title: 'Posición y punto de partida',
+        body: 'El sujeto orina antes de empezar y llega con un tiempo previo sin tomar líquido. Se acomoda semisentado, con la espalda reclinada y las piernas extendidas, y mantiene esa postura toda la sesión: la impedancia responde al movimiento mucho más rápido que al llenado.',
       },
       {
-        title: 'Registro continuo',
-        body: 'Inyección de corriente a 50 kHz y registro sin interrupciones. Cada valor publicado es el resultado de promediar 192 lecturas y filtrarlas por mediana antes de transmitir.',
+        title: 'Estabilización y basal',
+        body: 'Quince minutos de registro sin intervención, hasta que la lectura se asienta; recién ahí arranca la sesión. La basal es la mediana de su primer minuto y no las primeras muestras: es el número contra el que se compara todo lo que sigue, y si cayera dentro de un artefacto la sesión entera quedaría corrida.',
       },
       {
-        title: 'Micción y cierre',
-        body: 'Se registra el volumen miccional como evento y se cierra la sesión. El dataset completo queda exportable, muestra por muestra.',
+        title: 'Hidratación pautada',
+        body: 'A los diez minutos el sujeto toma 250 ml, y repite esa misma cantidad cada quince minutos. Cada ingesta queda marcada como evento con su volumen, para poder relacionar después lo tomado con la evolución de la impedancia.',
+      },
+      {
+        title: 'Cierre',
+        body: 'La sesión termina con la primera micción, al completar los dos litros o a las dos horas, lo que ocurra primero. Se registra el volumen miccional como evento. Si el sujeto ya había medido antes, la repetición queda anotada. El dataset completo queda exportable, muestra por muestra.',
       },
     ],
     instrumentTitle: 'Instrumentación',
@@ -122,10 +126,11 @@ export default {
     ],
     electrodeTitle: 'Montaje de electrodos',
     electrodeBody:
-      'Cuatro electrodos a nivel vesical, alineados por debajo del ombligo y simétricos respecto de la línea media. El par externo inyecta la corriente; el par interno mide la tensión. Separar las dos funciones es lo que saca de la lectura la impedancia de contacto piel-electrodo: por los electrodos de medición no circula corriente, así que no cae tensión sobre ellos.',
+      'Cuatro electrodos adhesivos a nivel vesical, en una sola fila por debajo del ombligo y centrada en la línea media. Se colocan en contacto consecutivo: el borde de cada uno toca al siguiente. El par externo inyecta la corriente; el par interno mide la tensión. Separar las dos funciones es lo que saca de la lectura la impedancia de contacto piel-electrodo: por los electrodos de medición no circula corriente, así que no cae tensión sobre ellos.',
     electrodeFig: 'Figura 2',
-    electrodeCaption: 'Montaje tetrapolar a nivel vesical.',
+    electrodeCaption: 'Montaje tetrapolar a nivel vesical, en contacto consecutivo.',
     navel: 'ombligo',
+    diameter: 'Ø electrodo',
     sensing: 'V+ / V− · medición de tensión',
     injection: 'I+ / I− · inyección de corriente',
     chainTitle: 'Cadena de medición',

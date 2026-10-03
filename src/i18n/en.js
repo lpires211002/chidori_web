@@ -79,24 +79,28 @@ export default {
     stepsTitle: 'Procedure',
     steps: [
       {
-        title: 'Preparation',
-        body: 'Electrode placement and contact check. The instrument discards the first samples until the reading settles.',
+        title: 'Subject preparation',
+        body: 'The subject is asked to arrive shaved at the pubic area, with the skin clean and dry, so the electrode adhesive sits flat. Before starting, a short fluid-intake survey is filled in: habitual intake and intake that day.',
       },
       {
-        title: 'Baseline',
-        body: 'Median of the first minute of recording. It is the number the whole session is compared against, so it is taken over a full minute rather than the first few samples: if it fell inside an artifact, the entire session would be offset.',
+        title: 'Electrode montage',
+        body: 'Four adhesive electrodes in a single row centred on the navel, each one in contact with the next. Adhesion is checked around the whole perimeter, with no edge lifting: a loose electrode shows up in the signal as a step, not as filling.',
       },
       {
-        title: 'Free hydration',
-        body: 'The subject drinks at will throughout the session. Each intake is logged as an event with its volume in millilitres, so intake can later be related to the impedance trace.',
+        title: 'Position and starting point',
+        body: 'The subject voids before starting and arrives after a period without drinking. They settle into a semi-reclined position, back supported and legs extended, and hold it for the whole session: impedance responds to movement far faster than it does to filling.',
       },
       {
-        title: 'Continuous recording',
-        body: 'Current injection at 50 kHz and uninterrupted recording. Every published value is the result of averaging 192 readings and median-filtering them before transmission.',
+        title: 'Stabilisation and baseline',
+        body: 'Fifteen minutes of recording without intervention, until the reading settles; only then does the session start. The baseline is the median of its first minute rather than the first few samples: it is the number everything that follows is compared against, and if it fell inside an artifact the whole session would be offset.',
       },
       {
-        title: 'Void and close',
-        body: 'Voided volume is logged as an event and the session is closed. The full dataset remains exportable, sample by sample.',
+        title: 'Scheduled hydration',
+        body: 'At ten minutes the subject drinks 250 ml, and repeats the same amount every fifteen minutes. Each intake is logged as an event with its volume, so intake can later be related to the impedance trace.',
+      },
+      {
+        title: 'Close',
+        body: 'The session ends at the first void, on reaching two litres, or at two hours, whichever comes first. Voided volume is logged as an event. If the subject has measured before, the repeat is noted. The full dataset remains exportable, sample by sample.',
       },
     ],
     instrumentTitle: 'Instrumentation',
@@ -121,10 +125,11 @@ export default {
     ],
     electrodeTitle: 'Electrode montage',
     electrodeBody:
-      'Four electrodes at bladder level, aligned below the navel and symmetric about the midline. The outer pair injects the current; the inner pair senses the voltage. Separating the two roles is what removes skin-electrode contact impedance from the reading: no current flows through the sensing electrodes, so no voltage drops across them.',
+      'Four adhesive electrodes at bladder level, in a single row below the navel and centred on the midline. They are placed in consecutive contact: the edge of each one touches the next. The outer pair injects the current; the inner pair senses the voltage. Separating the two roles is what removes skin-electrode contact impedance from the reading: no current flows through the sensing electrodes, so no voltage drops across them.',
     electrodeFig: 'Figure 2',
-    electrodeCaption: 'Tetrapolar montage at bladder level.',
+    electrodeCaption: 'Tetrapolar montage at bladder level, electrodes in consecutive contact.',
     navel: 'navel',
+    diameter: 'Electrode Ø',
     sensing: 'V+ / V− · voltage sensing',
     injection: 'I+ / I− · current injection',
     chainTitle: 'Measurement chain',
