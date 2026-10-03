@@ -84,7 +84,7 @@ export default {
       },
       {
         title: 'Electrode montage',
-        body: 'Four adhesive electrodes in a single row centred on the navel, each one in contact with the next. Adhesion is checked around the whole perimeter, with no edge lifting: a loose electrode shows up in the signal as a step, not as filling.',
+        body: 'The row sits level with the midpoint between the navel and the pubic symphysis: the sensing electrodes 3 cm either side of the midline, the current ones 3 cm further out. It spans almost the full width of the pubic area without reaching the iliac crests. The electrodes stay separated, never touching, and none may have a lifting edge: a loose electrode shows up in the signal as a step, not as filling.',
       },
       {
         title: 'Position and starting point',
@@ -125,11 +125,11 @@ export default {
     ],
     electrodeTitle: 'Electrode montage',
     electrodeBody:
-      'Four adhesive electrodes at bladder level, in a single row below the navel and centred on the midline. They are placed in consecutive contact: the edge of each one touches the next. The outer pair injects the current; the inner pair senses the voltage. Separating the two roles is what removes skin-electrode contact impedance from the reading: no current flows through the sensing electrodes, so no voltage drops across them.',
+      'Four electrodes in a row, level with the midpoint between the navel and the pubic symphysis. The inner pair, 3 cm either side of the midline, senses the voltage; the outer pair, 3 cm further out, injects the current. Separating the two roles is what removes skin-electrode contact impedance from the reading: no current flows through the sensing electrodes, so no voltage drops across them.',
     electrodeFig: 'Figure 2',
-    electrodeCaption: 'Tetrapolar montage at bladder level, electrodes in consecutive contact.',
+    electrodeCaption: 'Tetrapolar montage at bladder level.',
     navel: 'navel',
-    diameter: 'Electrode Ø',
+    pubis: 'symphysis',
     sensing: 'V+ / V− · voltage sensing',
     injection: 'I+ / I− · current injection',
     chainTitle: 'Measurement chain',

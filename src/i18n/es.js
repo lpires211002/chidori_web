@@ -84,7 +84,7 @@ export default {
       },
       {
         title: 'Montaje de electrodos',
-        body: 'Cuatro electrodos adhesivos en una sola fila centrada en el ombligo, cada uno en contacto con el siguiente. Se verifica que la unión con la piel sea uniforme en todo el perímetro y que ningún borde se despegue: un electrodo flojo aparece en la señal como un salto, no como llenado.',
+        body: 'La fila va a la altura del punto medio entre el ombligo y la sínfisis del pubis: los de tensión a 3 cm de la línea media y los de corriente 3 cm más afuera. Ocupa casi todo el ancho del pubis sin llegar a las crestas ilíacas. Los electrodos quedan separados, nunca en contacto, y se verifica que ninguno tenga un borde despegado: un electrodo flojo aparece en la señal como un salto, no como llenado.',
       },
       {
         title: 'Posición y punto de partida',
@@ -126,11 +126,11 @@ export default {
     ],
     electrodeTitle: 'Montaje de electrodos',
     electrodeBody:
-      'Cuatro electrodos adhesivos a nivel vesical, en una sola fila por debajo del ombligo y centrada en la línea media. Se colocan en contacto consecutivo: el borde de cada uno toca al siguiente. El par externo inyecta la corriente; el par interno mide la tensión. Separar las dos funciones es lo que saca de la lectura la impedancia de contacto piel-electrodo: por los electrodos de medición no circula corriente, así que no cae tensión sobre ellos.',
+      'Cuatro electrodos en fila, a la altura del punto medio entre el ombligo y la sínfisis del pubis. El par interno, a 3 cm de la línea media a cada lado, mide la tensión; el par externo, 3 cm más afuera, inyecta la corriente. Separar las dos funciones es lo que saca de la lectura la impedancia de contacto piel-electrodo: por los electrodos de medición no circula corriente, así que no cae tensión sobre ellos.',
     electrodeFig: 'Figura 2',
-    electrodeCaption: 'Montaje tetrapolar a nivel vesical, en contacto consecutivo.',
+    electrodeCaption: 'Montaje tetrapolar a nivel vesical.',
     navel: 'ombligo',
-    diameter: 'Ø electrodo',
+    pubis: 'sínfisis',
     sensing: 'V+ / V− · medición de tensión',
     injection: 'I+ / I− · inyección de corriente',
     chainTitle: 'Cadena de medición',

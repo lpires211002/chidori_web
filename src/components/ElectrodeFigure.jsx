@@ -3,51 +3,64 @@ import { useI18n } from '../lib/i18n.jsx';
 /*
  * Montaje tetrapolar a nivel vesical.
  *
- *   par externo  I+ / I−  · inyección de corriente
- *   par interno  V+ / V−  · medición de tensión
+ *   par interno  V+ / V−  · medicion de tension    · a 3 cm de la linea media
+ *   par externo  I+ / I−  · inyeccion de corriente · 3 cm mas afuera
  *
- * Los cuatro electrodos van en contacto consecutivo —el borde de cada uno toca
- * al siguiente— y la fila queda centrada en la línea media del ombligo, como
- * pide el protocolo. Por eso la separación entre centros es, por construcción,
- * el diámetro del electrodo: la única cota del dibujo es ese diámetro y no una
- * distancia en centímetros, que el protocolo todavía no fija.
+ * La fila va a la altura del punto medio entre el ombligo y la sinfisis del
+ * pubis, y ocupa casi todo el ancho del pubis sin llegar a las crestas iliacas.
  *
- * La altura de la fila respecto del ombligo queda sin cotar a propósito: el
- * protocolo la deja abierta. Si después se fija, va acá.
+ * Ojo con el reflejo de leer el dibujo al reves: la corriente entra por los dos
+ * de afuera y la tension se lee en los dos de adentro, justo encima de la
+ * vejiga. El par de tension queda a 6 cm entre si, asi que la fila NO esta
+ * equiespaciada: 3 cm, 6 cm, 3 cm.
  *
- * Distribución pensada para que nada se pise: ombligo rotulado a la derecha,
- * cota abajo a la derecha, leyenda por fuera del contorno.
+ * La altura se dibuja con la cota vertical de la izquierda: dos tramos con la
+ * marca de igualdad, sin numeros, porque la distancia cambia con cada sujeto.
+ *
+ * Los electrodos se dibujan como puntos: las posiciones estan definidas, el
+ * diametro del adhesivo no.
+ *
+ * Escala horizontal 1 cm = 12 px.
  */
 
-const R = 24; // radio del electrodo, en px del viewBox
+const CM = 12;
 const MID = 180;
-const NAVEL_Y = 86;
-const ROW = 170;
-const DIM_Y = 220;
+const NAVEL_Y = 70;
+const ROW = 150;
+const PUBIS_Y = 230;
+const VDIM_X = 42;
 
 const INK = '#201d18';
 const HAIR = '#dad4ca';
 const LOW = '#756e64';
 const SIGNAL = '#3b59cb';
-const PAPER = '#fbf9f4';
 
-// En contacto consecutivo: centros a ±R y ±3R de la línea media.
 const PADS = [
-  { x: MID - 3 * R, label: 'I+', drive: true },
-  { x: MID - R, label: 'V+', drive: false },
-  { x: MID + R, label: 'V−', drive: false },
-  { x: MID + 3 * R, label: 'I−', drive: true },
+  { x: MID - 6 * CM, label: 'I+' },
+  { x: MID - 3 * CM, label: 'V+' },
+  { x: MID + 3 * CM, label: 'V−' },
+  { x: MID + 6 * CM, label: 'I−' },
 ];
 
 const mono = { fontFamily: 'IBM Plex Mono, monospace' };
 
+// Cota horizontal con marcas en los extremos y el texto debajo.
 function Dim({ from, to, y, text }) {
   return (
     <g>
-      <line x1={from} x2={to} y1={y} y2={y} stroke={LOW} strokeWidth="1" />
-      <line x1={from} x2={from} y1={y - 4} y2={y + 4} stroke={LOW} strokeWidth="1" />
-      <line x1={to} x2={to} y1={y - 4} y2={y + 4} stroke={LOW} strokeWidth="1" />
-      <text x={(from + to) / 2} y={y - 6} textAnchor="middle" {...mono} fontSize="11" fill={LOW}>
+      <g stroke={LOW} strokeWidth="1">
+        <line x1={from} x2={to} y1={y} y2={y} />
+        <line x1={from} x2={from} y1={y - 4} y2={y + 4} />
+        <line x1={to} x2={to} y1={y - 4} y2={y + 4} />
+      </g>
+      <text
+        x={(from + to) / 2}
+        y={y + 16}
+        textAnchor="middle"
+        {...mono}
+        fontSize="11"
+        fill={LOW}
+      >
         {text}
       </text>
     </g>
@@ -59,67 +72,93 @@ export default function ElectrodeFigure() {
 
   return (
     <svg
-      viewBox="0 0 360 300"
+      viewBox="0 0 360 332"
       className="w-full h-auto"
       role="img"
       aria-label={t('protocol.electrodeCaption')}
     >
-      {/* Flancos del abdomen · contorno abierto, no una silueta cerrada */}
-      <path d="M80,18 C66,78 62,160 74,252" fill="none" stroke={INK} strokeWidth="1.25" />
-      <path d="M280,18 C294,78 298,160 286,252" fill="none" stroke={INK} strokeWidth="1.25" />
+      {/* Contorno · flancos, entrepierna y piernas */}
+      <g fill="none" stroke={INK} strokeWidth="1.25">
+        <path d="M78,20 C64,80 60,170 72,240" />
+        <path d="M282,20 C296,80 300,170 288,240" />
+        <path d="M72,240 L88,282" />
+        <path d="M288,240 L272,282" />
+        <path d="M180,232 L158,282" />
+        <path d="M180,232 L202,282" />
+      </g>
 
-      {/* Línea media · pasa justo por el contacto del par interno */}
+      {/* Linea media · del ombligo a la sinfisis */}
       <line
         x1={MID}
         x2={MID}
-        y1={18}
-        y2={200}
+        y1={NAVEL_Y}
+        y2={PUBIS_Y}
         stroke={HAIR}
         strokeWidth="1"
         strokeDasharray="3 4"
       />
 
-      {/* Ombligo · rotulado a la derecha, lejos de la cota */}
+      {/* Cota vertical · por fuera del cuerpo. Dos tramos iguales: la fila cae
+          en el punto medio entre el ombligo y la sinfisis. */}
+      <g stroke={LOW} strokeWidth="1">
+        <line x1={VDIM_X} x2={VDIM_X} y1={NAVEL_Y} y2={PUBIS_Y} />
+        <line x1={VDIM_X - 4} x2={VDIM_X + 4} y1={NAVEL_Y} y2={NAVEL_Y} />
+        <line x1={VDIM_X - 4} x2={VDIM_X + 4} y1={ROW} y2={ROW} />
+        <line x1={VDIM_X - 4} x2={VDIM_X + 4} y1={PUBIS_Y} y2={PUBIS_Y} />
+        <line x1={VDIM_X - 4} x2={VDIM_X + 4} y1={114} y2={106} />
+        <line x1={VDIM_X - 4} x2={VDIM_X + 4} y1={194} y2={186} />
+      </g>
+
+      {/* Ombligo */}
       <circle cx={MID} cy={NAVEL_Y} r="3.5" fill="none" stroke={INK} strokeWidth="1.25" />
       <text x={MID + 12} y={NAVEL_Y + 4} {...mono} fontSize="11" fill={LOW}>
         {t('protocol.navel')}
       </text>
 
-      {/* Electrodos · el par de inyección lleno, el de medición al contorno */}
+      {/* Sinfisis del pubis */}
+      <line x1={MID - 7} x2={MID + 7} y1={PUBIS_Y} y2={PUBIS_Y} stroke={INK} strokeWidth="1.25" />
+      <text x={MID + 14} y={PUBIS_Y + 4} {...mono} fontSize="11" fill={LOW}>
+        {t('protocol.pubis')}
+      </text>
+
+      {/* Nivel de la fila */}
+      <line
+        x1={80}
+        x2={280}
+        y1={ROW}
+        y2={ROW}
+        stroke={HAIR}
+        strokeWidth="1"
+        strokeDasharray="3 4"
+      />
+
+      {/* Electrodos */}
       {PADS.map((p) => (
         <g key={p.label}>
-          <circle
-            cx={p.x}
-            cy={ROW}
-            r={R}
-            fill={p.drive ? SIGNAL : PAPER}
-            stroke={SIGNAL}
-            strokeWidth="1.25"
-          />
+          <circle cx={p.x} cy={ROW} r="5" fill={SIGNAL} />
           <text
             x={p.x}
-            y={ROW + 4}
+            y={ROW - 12}
             textAnchor="middle"
             {...mono}
-            fontSize="12"
+            fontSize="11"
             fontWeight="500"
-            fill={p.drive ? PAPER : SIGNAL}
+            fill={INK}
           >
             {p.label}
           </text>
         </g>
       ))}
 
-      {/* Única cota · el ancho de un electrodo, que al ir en contacto es también
-          la separación entre centros. Va bajo el par interno, en el centro del
-          dibujo: contra el flanco el rótulo se montaba sobre el contorno. */}
-      <Dim from={MID} to={MID + 2 * R} y={DIM_Y} text={t('protocol.diameter')} />
+      {/* Cotas · linea media → tension → corriente */}
+      <Dim from={MID} to={MID + 3 * CM} y={ROW + 24} text="3 cm" />
+      <Dim from={MID + 3 * CM} to={MID + 6 * CM} y={ROW + 24} text="3 cm" />
 
       {/* Leyenda · por fuera del contorno */}
-      <text x={MID} y={272} textAnchor="middle" {...mono} fontSize="11" fill={LOW}>
+      <text x={MID} y={306} textAnchor="middle" {...mono} fontSize="11" fill={LOW}>
         {t('protocol.sensing')}
       </text>
-      <text x={MID} y={288} textAnchor="middle" {...mono} fontSize="11" fill={LOW}>
+      <text x={MID} y={322} textAnchor="middle" {...mono} fontSize="11" fill={LOW}>
         {t('protocol.injection')}
       </text>
     </svg>
